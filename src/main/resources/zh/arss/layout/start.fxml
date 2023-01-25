@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #eeeeee;" xmlns="http://javafx.com/javafx/17">
+    <Label alignment="CENTER" layoutX="76.0" layoutY="14.0" prefHeight="94.0" prefWidth="649.0" text="Автоматизированная система&#10;студии звукозаписи" textAlignment="CENTER" textFill="#3400ad">
+        <font>
+            <Font name="Arial Bold" size="33.0" />
+        </font>
+    </Label>
+</AnchorPane>
