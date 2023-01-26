@@ -55,7 +55,7 @@ public class Controller {
 
     public static void setShowStage(FXMLLoader loader) {
         stage.setTitle("Automated Recording Studio System");
-        stage.getIcons().add(new Image("file:src\\main\\resources\\zh\\arss\\image\\scratch_disc.png"));
+        stage.getIcons().add(new Image("file:src\\main\\resources\\zh\\arss\\image\\icon.png"));
         Parent root = loader.getRoot();
         Scene scene = new Scene(root);
         stage.setScene(scene);

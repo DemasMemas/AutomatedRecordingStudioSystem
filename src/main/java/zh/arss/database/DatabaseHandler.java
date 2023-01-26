@@ -44,17 +44,16 @@ public class DatabaseHandler {
         preparedStatement.setString(2, password);
         resultSet = preparedStatement.executeQuery();
 
-        return resultSet.next() ? String.valueOf(resultSet.getInt("user_id")) : "incorrect password";
+        return resultSet.next() ? String.valueOf(resultSet.getInt("id_user")) : "incorrect password";
     }
 
-    public String registration(String name, String login, String password) {
+    public String registration(String login, String password) {
         try {
-            String request = "insert into arss_user (id, name, login, password) values(?,?,?,?)";
+            String request = "insert into arss_user (id_user, login, password) values(?,?,?)";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
             preparedStatement.setLong(1, generateNewId("arss_user", "id_user"));
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, login);
-            preparedStatement.setString(4, password);
+            preparedStatement.setString(2, login);
+            preparedStatement.setString(3, password);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             return "error";
@@ -72,7 +71,6 @@ public class DatabaseHandler {
             resultSet.next();
 
             user.setIdUser(resultSet.getLong("id_user"));
-            user.setName(resultSet.getString("name"));
             user.setLogin(resultSet.getString("login"));
             user.setPassword(resultSet.getString("password"));
 

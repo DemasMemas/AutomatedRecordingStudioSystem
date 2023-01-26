@@ -2,7 +2,6 @@ package zh.arss.entity;
 
 public class User {
     private long idUser;
-    private String name;
     private String login;
     private String password;
 
@@ -12,14 +11,6 @@ public class User {
 
     public void setIdUser(long idUser) {
         this.idUser = idUser;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getLogin() {

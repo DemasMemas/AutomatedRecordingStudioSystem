@@ -7,10 +7,10 @@ import zh.arss.controller.Controller;
 
 import java.io.IOException;
 
-public class Main extends Application {
+public class MusicRecordStudio extends Application {
     @Override
     public void start(Stage stage) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layout/start.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("layout/musicStudioMain.fxml"));
         try {
             fxmlLoader.load();
         } catch (IOException ioException) {

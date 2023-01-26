@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1000.0" stylesheets="@../stile/JMetroDarkTheme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zh.arss.controller.MainController">
+   <children>
+      <ImageView pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/background_2.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="authorizeButton" layoutX="830.0" layoutY="2.0" mnemonicParsing="false" text="Авторизоваться" />
+      <TabPane layoutX="14.0" layoutY="39.0" prefHeight="666.0" prefWidth="971.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Сделать заявку">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="735.0" />
+            </content>
+          </Tab>
+          <Tab text="Аранжировки">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Сведение">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Запись">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Команда">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Контакты">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Button fx:id="registerButton" layoutX="628.0" layoutY="2.0" mnemonicParsing="false" text="Зарегистрироваться" />
+   </children>
+</AnchorPane>
