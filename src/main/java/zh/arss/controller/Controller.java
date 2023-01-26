@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import zh.arss.MusicRecordStudio;
 
 import java.io.IOException;
 
@@ -54,10 +55,10 @@ public class Controller {
     }
 
     public static void setShowStage(FXMLLoader loader) {
-        stage.setTitle("Automated Recording Studio System");
-        stage.getIcons().add(new Image("file:src\\main\\resources\\zh\\arss\\image\\icon.png"));
+        stage.setTitle("Music Studio \"Valentine Skarab\"");
+        stage.getIcons().add(new Image(String.valueOf(MusicRecordStudio.class.getResource("image/icon.png"))));
         Parent root = loader.getRoot();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 1000, 720);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
