@@ -26,6 +26,9 @@ public class MainController implements Initializable {
     @FXML
     private Button registerButton;
 
+    @FXML
+    private GridPane timeTableGPane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showRegistrationBonusAlert();
@@ -139,6 +142,52 @@ public class MainController implements Initializable {
                 }
             }
         });
+
+        timeTableGPane.setBackground(new Background(new BackgroundImage(new Image(String.valueOf(MusicRecordStudio.class
+                .getResource("image/background.jpg"))),
+                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                new BackgroundPosition(null, 118, true, null, 14, true),
+                new BackgroundSize(735, 540, true, true, true, true))));
+        timeTableGPane.add(new Label("Понедельник"), 1, 0);
+        timeTableGPane.add(new Label("Вторник"), 2, 0);
+        timeTableGPane.add(new Label("Среда"), 3, 0);
+        timeTableGPane.add(new Label("Четверг"), 4, 0);
+        timeTableGPane.add(new Label("Пятница"), 5, 0);
+        timeTableGPane.add(new Label("Суббота"), 6, 0);
+        timeTableGPane.add(new Label("Воскресенье"), 7, 0);
+
+        timeTableGPane.add(new Label("8:00"), 0, 1);
+        timeTableGPane.add(new Label("9:00"), 0, 2);
+        timeTableGPane.add(new Label("10:00"), 0, 3);
+        timeTableGPane.add(new Label("11:00"), 0, 4);
+        timeTableGPane.add(new Label("12:00"), 0, 5);
+        timeTableGPane.add(new Label("13:00"), 0, 6);
+        timeTableGPane.add(new Label("14:00"), 0, 7);
+        timeTableGPane.add(new Label("15:00"), 0, 8);
+        timeTableGPane.add(new Label("16:00"), 0, 9);
+        timeTableGPane.add(new Label("17:00"), 0, 10);
+        timeTableGPane.add(new Label("18:00"), 0, 11);
+        timeTableGPane.add(new Label("19:00"), 0, 12);
+        timeTableGPane.add(new Label("20:00"), 0, 13);
+        timeTableGPane.add(new Label("21:00"), 0, 14);
+        timeTableGPane.add(new Label("22:00"), 0, 15);
+        timeTableGPane.add(new Label("23:00"), 0, 16);
+        timeTableGPane.add(new Label("Ночь"), 0, 17);
+
+        // вот тут вставлять приколы с другой надписью
+        for (int i = 1; i < 8; i++){
+            for (int j = 1; j < 18; j++){
+                Label tempLabel = new Label("СВОБОДНО");
+                tempLabel.setStyle( "-fx-text-fill: darkgreen;");
+                // тут считывать нажатия
+                int finalI = i;
+                int finalJ = j;
+                tempLabel.setOnMouseClicked(mouseEvent -> {
+                    System.out.println("HELP I`M CLICKED " + finalI + " " + finalJ);
+                });
+                timeTableGPane.add(tempLabel, i, j);
+            }
+        }
 
     }
 
