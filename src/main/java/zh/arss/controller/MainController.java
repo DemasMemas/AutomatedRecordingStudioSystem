@@ -29,6 +29,21 @@ public class MainController implements Initializable {
     @FXML
     private GridPane timeTableGPane;
 
+    @FXML
+    private Button createRequest;
+
+    @FXML
+    private TextField descriptionTextField;
+
+    @FXML
+    private TextField emailTextField;
+
+    @FXML
+    private TextField phoneTextField;
+
+    @FXML
+    private Label requestTimeLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showRegistrationBonusAlert();
@@ -183,11 +198,30 @@ public class MainController implements Initializable {
                 int finalI = i;
                 int finalJ = j;
                 tempLabel.setOnMouseClicked(mouseEvent -> {
-                    System.out.println("HELP I`M CLICKED " + finalI + " " + finalJ);
+                    if (tempLabel.getText().equals("СВОБОДНО")){
+                        createRequest.setVisible(true);
+                        descriptionTextField.setVisible(true);
+                        emailTextField.setVisible(true);
+                        phoneTextField.setVisible(true);
+                        Label newColLabel = (Label) timeTableGPane.getChildren().get(finalI-1);
+                        Label newRowLabel = (Label) timeTableGPane.getChildren().get(finalJ+6);
+                        requestTimeLabel.setText("Время заявки: " +  newColLabel.getText() + " " + newRowLabel.getText());
+                        requestTimeLabel.setVisible(true);
+                    } else {
+                        createRequest.setVisible(false);
+                        descriptionTextField.setVisible(false);
+                        emailTextField.setVisible(false);
+                        phoneTextField.setVisible(false);
+                        requestTimeLabel.setVisible(false);
+                    }
                 });
                 timeTableGPane.add(tempLabel, i, j);
             }
         }
+
+        createRequest.setOnAction(actionEvent -> {
+            // вот тут срабатывает кнопка
+        });
 
     }
 
