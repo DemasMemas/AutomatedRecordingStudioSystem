@@ -9,13 +9,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1000.0" stylesheets="@../stile/JMetroDarkTheme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="zh.arss.controller.MainController">
    <children>
-      <ImageView pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/background_2.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="authorizeButton" layoutX="830.0" layoutY="2.0" mnemonicParsing="false" text="Авторизоваться" />
-      <TabPane layoutX="14.0" layoutY="39.0" prefHeight="666.0" prefWidth="971.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="11.0" layoutY="14.0" prefHeight="687.0" prefWidth="971.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Сделать заявку">
             <content>
@@ -49,6 +48,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="registerButton" layoutX="628.0" layoutY="2.0" mnemonicParsing="false" text="Зарегистрироваться" />
+      <Button fx:id="registerButton" layoutX="770.0" layoutY="14.0" mnemonicParsing="false" text="Зарегистрироваться" />
+      <Button fx:id="authorizeButton" layoutX="770.0" layoutY="49.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="184.0" text="Авторизоваться" />
    </children>
 </AnchorPane>
