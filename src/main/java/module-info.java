@@ -4,6 +4,7 @@ module zh.arss.automatedrecordingstudiosystem {
     requires java.sql;
     requires org.postgresql.jdbc;
     requires mysql.connector.java;
+    requires javafx.media;
 
 
     opens zh.arss to javafx.fxml;
