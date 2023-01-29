@@ -11,10 +11,11 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import zh.arss.MusicRecordStudio;
+import zh.arss.entity.Request;
 import zh.arss.service.MainService;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -195,7 +196,7 @@ public class MainController implements Initializable {
 
         // тут сделать цикл с вставкой аранжировок по порядку
         // считывать картинку, имя, номер, стоимость минимальную и максимальную
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             arrangeGP.addRow(i);
             arrangeGP.add(new ImageView(new Image(String.valueOf(MusicRecordStudio.class
                     .getResource("image/arrange/" + "[free for profit] lildrughill x rocket x shmoney sound type beat - mallet.png")))), 0, i);
@@ -205,22 +206,39 @@ public class MainController implements Initializable {
         }
 
         // вот тут вставлять приколы с другой надписью
-        for (int i = 1; i < 8; i++){
-            for (int j = 1; j < 18; j++){
-                Label tempLabel = new Label("СВОБОДНО");
-                tempLabel.setStyle( "-fx-text-fill: darkgreen;");
+        List<Request> requestList = service.getAllRequest();
+        for (int i = 1; i < 8; i++) {
+            for (int j = 1; j < 18; j++) {
+                Label tempLabel = new Label();
+                tempLabel.setText("СВОБОДНО");
+                tempLabel.setStyle("-fx-text-fill: darkgreen;");
+                Label tempColLabel = (Label) timeTableGPane.getChildren().get(i - 1);
+                Label tempRowLabel = (Label) timeTableGPane.getChildren().get(j + 6);
+                String date = tempColLabel.getText() + " " + tempRowLabel.getText();
+
+                for (Request request : requestList) {
+                    if (request.getDate().equals(date)) {
+                        tempLabel.setText("ЗАНЯТО");
+                        tempLabel.setStyle("-fx-text-fill: darkorange;");
+                        break;
+                    }
+                }
                 // тут считывать нажатия
                 int finalI = i;
                 int finalJ = j;
                 tempLabel.setOnMouseClicked(mouseEvent -> {
-                    if (tempLabel.getText().equals("СВОБОДНО")){
+                    if (service.getUser() == null) {
+                        showCustomAlert("АВТОРИЗУЙСЯ ПАДЛА");
+                        return;
+                    }
+                    if (tempLabel.getText().equals("СВОБОДНО")) {
                         createRequest.setVisible(true);
                         descriptionTextField.setVisible(true);
                         emailTextField.setVisible(true);
                         phoneTextField.setVisible(true);
-                        Label newColLabel = (Label) timeTableGPane.getChildren().get(finalI-1);
-                        Label newRowLabel = (Label) timeTableGPane.getChildren().get(finalJ+6);
-                        requestTimeLabel.setText("Время заявки: " +  newColLabel.getText() + " " + newRowLabel.getText());
+                        Label newColLabel = (Label) timeTableGPane.getChildren().get(finalI - 1);
+                        Label newRowLabel = (Label) timeTableGPane.getChildren().get(finalJ + 6);
+                        requestTimeLabel.setText("Время заявки: " + newColLabel.getText() + " " + newRowLabel.getText());
                         requestTimeLabel.setVisible(true);
                     } else {
                         createRequest.setVisible(false);
@@ -235,9 +253,18 @@ public class MainController implements Initializable {
         }
 
         createRequest.setOnAction(actionEvent -> {
-            // вот тут срабатывает кнопка
-        });
+            String response = service.createRequest(requestTimeLabel.getText(), emailTextField.getText(),
+                    phoneTextField.getText(), descriptionTextField.getText());
+            createRequest.setVisible(false);
+            descriptionTextField.setVisible(false);
+            emailTextField.setVisible(false);
+            phoneTextField.setVisible(false);
+            requestTimeLabel.setVisible(false);
 
+            //Дима, сделай здесь обновление занятых дней
+
+            showCustomAlert(response + "\n\nДанный номер нужно сохранить для того, чтобы вы смогли доказать, что данную заявку сделали вы");
+        });
     }
 
     // показ сообщения о скидке при регистрации
