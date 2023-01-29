@@ -14,6 +14,7 @@ import zh.arss.MusicRecordStudio;
 import zh.arss.service.MainService;
 
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -43,6 +44,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Label requestTimeLabel;
+
+    @FXML
+    private GridPane arrangeGP;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -188,6 +192,17 @@ public class MainController implements Initializable {
         timeTableGPane.add(new Label("22:00"), 0, 15);
         timeTableGPane.add(new Label("23:00"), 0, 16);
         timeTableGPane.add(new Label("Ночь"), 0, 17);
+
+        // тут сделать цикл с вставкой аранжировок по порядку
+        // считывать картинку, имя, номер, стоимость минимальную и максимальную
+        for (int i = 0; i < 10; i++){
+            arrangeGP.addRow(i);
+            arrangeGP.add(new ImageView(new Image(String.valueOf(MusicRecordStudio.class
+                    .getResource("image/arrange/" + "[free for profit] lildrughill x rocket x shmoney sound type beat - mallet.png")))), 0, i);
+            arrangeGP.add(new Label("[free for profit] lildrughill x rocket x shmoney sound type beat - mallet.png"), 1, i);
+            arrangeGP.add(new Label("800-3000 ₽"), 2, i);
+            arrangeGP.add(new Label("КУПИТЬ"), 3, i);
+        }
 
         // вот тут вставлять приколы с другой надписью
         for (int i = 1; i < 8; i++){
