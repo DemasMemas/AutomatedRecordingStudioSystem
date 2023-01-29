@@ -10,11 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import javafx.scene.media.*;
 import zh.arss.MusicRecordStudio;
 import zh.arss.service.MainService;
 
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -48,9 +48,55 @@ public class MainController implements Initializable {
     @FXML
     private GridPane arrangeGP;
 
+    @FXML
+    private AnchorPane buyPane;
+
+    @FXML
+    private RadioButton mp3RB;
+
+    @FXML
+    private RadioButton trackOutRB;
+
+    @FXML
+    private RadioButton wavRB;
+
+    @FXML
+    private RadioButton wavURB;
+
+    @FXML
+    private Button closeBuyPaneButton;
+
+    @FXML
+    private Button buyArrangeButton;
+
+    @FXML
+    private MediaView arrangeBuyMedia;
+
+    @FXML
+    private Label arrangeBuyName;
+
+    MediaPlayer mediaPlayer;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showRegistrationBonusAlert();
+
+        // установка группы
+        ToggleGroup group = new ToggleGroup();
+        mp3RB.setToggleGroup(group);
+        wavRB.setToggleGroup(group);
+        wavURB.setToggleGroup(group);
+        trackOutRB.setToggleGroup(group);
+
+        closeBuyPaneButton.setOnAction(event -> {
+            buyPane.setVisible(false);
+            mediaPlayer.pause();
+        });
+
+        // добавить всякие действия на покупку
+        buyArrangeButton.setOnAction(event -> {
+            buyPane.setVisible(false);
+            mediaPlayer.pause();
+        });
 
         authorizeButton.setOnAction(event -> {
             // открыть окно с регистрацией или авторизацией
@@ -199,9 +245,21 @@ public class MainController implements Initializable {
             arrangeGP.addRow(i);
             arrangeGP.add(new ImageView(new Image(String.valueOf(MusicRecordStudio.class
                     .getResource("image/arrange/" + "[free for profit] lildrughill x rocket x shmoney sound type beat - mallet.png")))), 0, i);
-            arrangeGP.add(new Label("[free for profit] lildrughill x rocket x shmoney sound type beat - mallet.png"), 1, i);
+            Label nameLabel = new Label("[free for profit] lildrughill x rocket x shmoney sound type beat - mallet");
+            nameLabel.setWrapText(true);
+            arrangeGP.add(nameLabel, 1, i);
             arrangeGP.add(new Label("800-3000 ₽"), 2, i);
-            arrangeGP.add(new Label("КУПИТЬ"), 3, i);
+            Label buyLabel = new Label("КУПИТЬ");
+            buyLabel.setOnMouseClicked(mouseEvent -> {
+                Media media = new Media(String.valueOf(MusicRecordStudio.class
+                        .getResource("image/arrange/" + nameLabel.getText() + ".mp4")));
+                mediaPlayer = new MediaPlayer(media);
+                arrangeBuyMedia.setMediaPlayer(mediaPlayer);
+                mediaPlayer.play();
+                arrangeBuyName.setText(nameLabel.getText());
+                buyPane.setVisible(true);
+            });
+            arrangeGP.add(buyLabel, 3, i);
         }
 
         // вот тут вставлять приколы с другой надписью
