@@ -115,6 +115,7 @@ public class MainService {
             writer.println("Файл лицензии, который Валентин так и не отправил\n\n\n\n");
             writer.println("Покупка аранжировки " + arrangement.getName());
             writer.println("по лицензии " + license.substring(0, license.indexOf('-')) + "\n\n");
+            writer.println("Покупатель " + user.getLogin() + "\n\n");
             writer.println("Общая стоимость: " + license.substring(license.indexOf('-') + 2) + " рублей");
             writer.close();
             Files.move(Paths.get(fileName), Paths.get( "licenses\\" + fileName));
