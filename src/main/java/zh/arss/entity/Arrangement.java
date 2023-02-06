@@ -3,8 +3,7 @@ package zh.arss.entity;
 public class Arrangement {
     private long idArrangement;
     private String name;
-    private String style;
-    private String license;
+    private String status;
 
     public long getIdArrangement() {
         return idArrangement;
@@ -22,19 +21,11 @@ public class Arrangement {
         this.name = name;
     }
 
-    public String getStyle() {
-        return style;
+    public String getStatus() {
+        return status;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    public String getLicense() {
-        return license;
-    }
-
-    public void setLicense(String license) {
-        this.license = license;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

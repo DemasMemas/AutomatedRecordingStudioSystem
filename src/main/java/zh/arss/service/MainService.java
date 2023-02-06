@@ -1,11 +1,17 @@
 package zh.arss.service;
 
 import zh.arss.database.DatabaseHandler;
+import zh.arss.entity.Arrangement;
 import zh.arss.entity.Request;
 import zh.arss.entity.User;
 import zh.arss.utilities.PasswordHasher;
 
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -97,7 +103,32 @@ public class MainService {
         return user;
     }
 
+    public boolean buyArrangement(Arrangement arrangement, String license){
+        try {
+            license = license.substring(license.indexOf('\'') + 1, license.length() - 3);
+            databaseHandler.buyArrangement(arrangement.getIdArrangement());
+            String fileName = (user.getLogin() + "_" + arrangement.getName() + "_" + license + ".txt")
+                    .replace(" ", "_").replace(":", "_")
+                    .replace(",", "_").replace("\"", "_")
+                    .replace("?", "_").replace("|", "_");
+            PrintWriter writer = new PrintWriter(fileName, StandardCharsets.UTF_8);
+            writer.println("Файл лицензии, который Валентин так и не отправил\n\n\n\n");
+            writer.println("Покупка аранжировки " + arrangement.getName());
+            writer.println("по лицензии " + license.substring(0, license.indexOf('-')) + "\n\n");
+            writer.println("Общая стоимость: " + license.substring(license.indexOf('-') + 2) + " рублей");
+            writer.close();
+            Files.move(Paths.get(fileName), Paths.get( "licenses\\" + fileName));
+            return true;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return false;
+        }
+    }
+
     public List<Request> getAllRequest() {
         return databaseHandler.getAllRequest();
+    }
+    public List<Arrangement> getAllArrangement() {
+        return databaseHandler.getAllArrangement();
     }
 }

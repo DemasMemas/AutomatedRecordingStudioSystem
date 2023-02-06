@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import javafx.scene.media.*;
 import zh.arss.MusicRecordStudio;
+import zh.arss.entity.Arrangement;
 import zh.arss.entity.Request;
 import zh.arss.service.MainService;
 
@@ -78,6 +79,9 @@ public class MainController implements Initializable {
     private Label arrangeBuyName;
 
     MediaPlayer mediaPlayer;
+    List<Arrangement> arrangements = service.getAllArrangement();
+    String selectedArrangementName;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showRegistrationBonusAlert();
@@ -96,8 +100,29 @@ public class MainController implements Initializable {
 
         // добавить всякие действия на покупку
         buyArrangeButton.setOnAction(event -> {
-            buyPane.setVisible(false);
-            mediaPlayer.pause();
+            Toggle toggle = group.getSelectedToggle();
+            Arrangement arrangement = arrangements.stream().filter(
+                            ar -> ar.getName().equals(selectedArrangementName))
+                    .findAny().get();
+            if (toggle != null) {
+                if (service.getUser() == null){
+                    showCustomErrorAlert("АВТОРИЗУЙСЯ ПАДЛА");
+                }
+                else if (arrangement.getStatus().equals("purchased")){
+                    showCustomErrorAlert("Эта аранжировка уже куплена");
+                }
+                else if (service.buyArrangement(
+                        arrangement,
+                        toggle.toString())) {
+                    buyPane.setVisible(false);
+                    mediaPlayer.pause();
+                    showCustomAlert("Успешная покупка!\nНе забудьте забрать свои реквизиты");
+                    arrangements = service.getAllArrangement();
+                }
+                else {
+                    showCustomErrorAlert("Ошибка. Не Удалось совершить покупку");
+                }
+            }
         });
 
         authorizeButton.setOnAction(event -> {
@@ -243,16 +268,17 @@ public class MainController implements Initializable {
 
         // тут сделать цикл с вставкой аранжировок по порядку
         // считывать картинку, имя, номер, стоимость минимальную и максимальную
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < arrangements.size(); i++) {
             arrangeGP.addRow(i);
             arrangeGP.add(new ImageView(new Image(String.valueOf(MusicRecordStudio.class
-                    .getResource("image/arrange/" + "[free for profit] lildrughill x rocket x shmoney sound type beat - mallet.png")))), 0, i);
-            Label nameLabel = new Label("[free for profit] lildrughill x rocket x shmoney sound type beat - mallet");
+                    .getResource("image/arrange/" + arrangements.get(i).getName() + ".png")))), 0, i);
+            Label nameLabel = new Label(arrangements.get(i).getName());
             nameLabel.setWrapText(true);
             arrangeGP.add(nameLabel, 1, i);
             arrangeGP.add(new Label("800-3000 ₽"), 2, i);
             Label buyLabel = new Label("КУПИТЬ");
             buyLabel.setOnMouseClicked(mouseEvent -> {
+                selectedArrangementName = nameLabel.getText();
                 Media media = new Media(String.valueOf(MusicRecordStudio.class
                         .getResource("image/arrange/" + nameLabel.getText() + ".mp4")));
                 mediaPlayer = new MediaPlayer(media);

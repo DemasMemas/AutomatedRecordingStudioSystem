@@ -1,5 +1,6 @@
 package zh.arss.database;
 
+import zh.arss.entity.Arrangement;
 import zh.arss.entity.Request;
 import zh.arss.entity.User;
 
@@ -140,6 +141,35 @@ public class DatabaseHandler {
         }
         catch (Exception exception) {
             return requests;
+        }
+    }
+
+    public void buyArrangement(long id) throws SQLException {
+        String request = "update arrangement set status = 'purchased' where id_arrangement = ?";
+        PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+        preparedStatement.setLong(1, id);
+        preparedStatement.executeUpdate();
+    }
+
+    public List<Arrangement> getAllArrangement() {
+        List<Arrangement> arrangements = new ArrayList<>();
+        try {
+            String request = "select * from arrangement";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Arrangement arrangement = new Arrangement();
+                arrangement.setIdArrangement(resultSet.getLong("id_arrangement"));
+                arrangement.setName(resultSet.getString("name"));
+                arrangement.setStatus(resultSet.getString("status"));
+
+                arrangements.add(arrangement);
+            }
+
+            return arrangements;
+        }
+        catch (Exception exception) {
+            return arrangements;
         }
     }
 }
