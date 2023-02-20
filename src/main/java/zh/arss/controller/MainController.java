@@ -78,6 +78,9 @@ public class MainController implements Initializable {
     @FXML
     private Label arrangeBuyName;
 
+    @FXML
+    private TabPane tabPane;
+
     MediaPlayer mediaPlayer;
     List<Arrangement> arrangements = service.getAllArrangement();
     String selectedArrangementName;
@@ -389,4 +392,7 @@ public class MainController implements Initializable {
                 new BackgroundSize(400, 100, true, true, true, true))));
         alert.showAndWait();
     }
+
+    public void openContacts(){tabPane.getSelectionModel().select(tabPane.getTabs().get(tabPane.getTabs().size() - 1));}
+    public void openRequests(){tabPane.getSelectionModel().select(0);}
 }
