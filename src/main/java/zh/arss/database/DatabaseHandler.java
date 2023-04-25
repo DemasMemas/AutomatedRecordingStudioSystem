@@ -1,6 +1,7 @@
 package zh.arss.database;
 
 import zh.arss.entity.Arrangement;
+import zh.arss.entity.Purchase;
 import zh.arss.entity.Request;
 import zh.arss.entity.User;
 
@@ -53,11 +54,26 @@ public class DatabaseHandler {
 
     public String registration(String login, String password) {
         try {
-            String request = "insert into arss_user (id_user, login, password) values(?,?,?)";
+            String request = "insert into arss_user (id_user, login, password, is_administrator) values(?,?,?,?)";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
             preparedStatement.setLong(1, generateNewId("arss_user", "id_user"));
             preparedStatement.setString(2, login);
             preparedStatement.setString(3, password);
+            preparedStatement.setBoolean(4, false);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            return "error";
+        }
+        return "success";
+    }
+
+    public String insertPurchase(Long id_user, Long id_arrangement) {
+        try {
+            String request = "insert into purchase (id_purchase ,id_user, id_arrangement) values(?,?,?)";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, generateNewId("purchase", "id_purchase"));
+            preparedStatement.setLong(2, id_user);
+            preparedStatement.setLong(3, id_arrangement);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             return "error";
@@ -77,28 +93,12 @@ public class DatabaseHandler {
             user.setIdUser(resultSet.getLong("id_user"));
             user.setLogin(resultSet.getString("login"));
             user.setPassword(resultSet.getString("password"));
+            user.setAdministrator(resultSet.getBoolean("is_administrator"));
 
             return user;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private long generateNewId(String table, String idName) throws SQLException {
-        String request = "select " + idName + " from " + table;
-        PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        long newId = 0;
-        try {
-            while (resultSet.next()) {
-                long thisId = Long.parseLong(resultSet.getString(idName));
-                if (newId < thisId) {
-                    newId = thisId;
-                }
-            }
-        } catch (Exception ignored) {
-        }
-        return ++newId;
     }
 
     public void insertRequest(Long idUser, String date, String service, String code, String email,
@@ -170,6 +170,185 @@ public class DatabaseHandler {
         }
         catch (Exception exception) {
             return arrangements;
+        }
+    }
+
+    public List<User> getAllUser() {
+        List<User> users = new ArrayList<>();
+        try {
+                String request = "select * from arss_user";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setIdUser(resultSet.getLong("id_user"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setAdministrator(resultSet.getBoolean("is_administrator"));
+
+                users.add(user);
+            }
+
+            return users;
+        }
+        catch (Exception exception) {
+            return users;
+        }
+    }
+
+    public List<Purchase> getAllPurchase() {
+        List<Purchase> purchases = new ArrayList<>();
+        try {
+            String request = "select * from purchase";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Purchase purchase = new Purchase();
+                purchase.setId(resultSet.getLong("id_purchase"));
+                purchase.setIdUser(resultSet.getLong("id_user"));
+                purchase.setIdArrangement(resultSet.getLong("id_arrangement"));
+
+                purchases.add(purchase);
+            }
+
+            return purchases;
+        }
+        catch (Exception exception) {
+            return purchases;
+        }
+    }
+
+    private long generateNewId(String table, String idName) throws SQLException {
+        String request = "select " + idName + " from " + table;
+        PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        long newId = 0;
+        try {
+            while (resultSet.next()) {
+                long thisId = Long.parseLong(resultSet.getString(idName));
+                if (newId < thisId) {
+                    newId = thisId;
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        return ++newId;
+    }
+
+
+    public void updateUser(long id, String login, String password, Boolean role) {
+        try {
+            String request = "update arss_user set login = ?, password = ?, role = ? where id_user = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
+            preparedStatement.setBoolean(3, role);
+            preparedStatement.setLong(4, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+
+    public void updatePurchase(long id, long idUser, long idArrangement) {
+        try {
+            String request = "update purchase set id_user = ?, id_arrangement = ? where id_purchase = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, idUser);
+            preparedStatement.setLong(2, idArrangement);
+            preparedStatement.setLong(3, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void insertArrangement(String name, String status) {
+        try {
+            String request = "insert into arrangement (id_arrangement, name, status) values(?,?,?)";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, generateNewId("arrangement", "id_arrangement"));
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3, status);
+            preparedStatement.executeUpdate();
+        } catch (Exception ignored) {}
+    }
+
+    public void updateArrangement(long id, String name, String status) {
+        try {
+            String request = "update arrangement set name = ?, status = ? where id_arrangement = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, status);
+            preparedStatement.setLong(3, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void updateRequest(long id, long userId, String date, String serviceRequest,
+                              String code, String email, String phone, String description) {
+        try {
+            String request = "update arss_request set id_user = ?, date = ?, service = ?, code = ?, email = ?," +
+                    " phone = ?, description = ? where id_request = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, userId);
+            preparedStatement.setString(2, date);
+            preparedStatement.setString(3, serviceRequest);
+            preparedStatement.setString(4, code);
+            preparedStatement.setString(5, email);
+            preparedStatement.setString(6, phone);
+            preparedStatement.setString(7, description);
+            preparedStatement.setLong(8, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void deleteRequest(long id) {
+        try {
+            String request = "delete from arss_request where id_request = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void deleteUser(long id) {
+        try {
+            String request = "delete from arss_user where id_user = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void deleteArrangement(long id) {
+        try {
+            String request = "delete from arrangement where id_arrangement = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void deletePurchase(long id) {
+        try {
+            String request = "delete from purchase where id_purchase = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 }

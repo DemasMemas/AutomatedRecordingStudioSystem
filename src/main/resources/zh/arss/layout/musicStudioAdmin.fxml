@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="720.0" maxWidth="1000.0" minHeight="720.0" minWidth="1000.0" prefHeight="720.0"
+            prefWidth="1000.0" stylesheets="@../style/JMetroDarkTheme.css" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="zh.arss.controller.AdminController">
+    <ImageView fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../image/background_2.jpg"/>
+    </ImageView>
+    <TabPane fx:id="tabPane" layoutX="11.0" layoutY="14.0" prefHeight="687.0" prefWidth="971.0"
+             tabClosingPolicy="UNAVAILABLE">
+        <Tab text="Заявки">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="735.0">
+                <TableView fx:id="requestsTableView" layoutX="42.0" layoutY="34.0" prefHeight="550.0" prefWidth="887.0"
+                           style="-fx-background-color: #1a153f; -fx-border-color: #240935;">
+                    <columns>
+                        <TableColumn fx:id="idRequestTableColumn" prefWidth="75.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="ID"/>
+                        <TableColumn fx:id="userRequestTableColumn" prefWidth="117.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8"
+                                     text="пользователь"/>
+                        <TableColumn fx:id="dateRequestTableColumn" prefWidth="132.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="дата"/>
+                        <TableColumn fx:id="serviceRequestTableColumn" prefWidth="79.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="услуга"/>
+                        <TableColumn fx:id="codeRequestTableColumn" prefWidth="92.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="код"/>
+                        <TableColumn fx:id="emailRequestTableColumn" prefWidth="110.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="почта"/>
+                        <TableColumn fx:id="phoneRequestTableColumn" prefWidth="112.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="телефон"/>
+                        <TableColumn fx:id="descriptionRequestTableColumn" prefWidth="168.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="описание"/>
+                    </columns>
+                </TableView>
+            </AnchorPane>
+        </Tab>
+        <Tab text="Аранжировки">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <TableView fx:id="arrangementTableView" layoutX="42.0" layoutY="34.0" prefHeight="550.0"
+                           prefWidth="887.0" style="-fx-background-color: #1a153f; -fx-border-color: #240935;">
+                    <columns>
+                        <TableColumn fx:id="idArrangementTableColumn" prefWidth="75.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="ID"/>
+                        <TableColumn fx:id="nameArrangementTableColumn" prefWidth="598.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="название"/>
+                        <TableColumn fx:id="statusArrangementTableColumn" prefWidth="211.99993896484375"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="статус"/>
+                    </columns>
+                </TableView>
+            </AnchorPane>
+        </Tab>
+        <Tab text="Пользователи">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <TableView fx:id="userTableView" layoutX="42.0" layoutY="34.0" prefHeight="550.0" prefWidth="887.0"
+                           style="-fx-background-color: #1a153f; -fx-border-color: #240935;">
+                    <columns>
+                        <TableColumn fx:id="idUserTableColumn" prefWidth="75.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="ID"/>
+                        <TableColumn fx:id="loginUserTableColumn" prefWidth="430.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="логин"/>
+                        <TableColumn fx:id="passwordUserTableColumn" prefWidth="255.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="пароль"/>
+                        <TableColumn fx:id="roleUserTableColumn" prefWidth="125.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="роль"/>
+                    </columns>
+                </TableView>
+            </AnchorPane>
+        </Tab>
+        <Tab text="Покупки">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <TableView fx:id="purchaseTableView" layoutX="42.0" layoutY="34.0" prefHeight="550.0" prefWidth="887.0"
+                           style="-fx-background-color: #1a153f; -fx-border-color: #240935;">
+                    <columns>
+                        <TableColumn fx:id="idPurchaseTableColumn" prefWidth="75.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8" text="ID"/>
+                        <TableColumn fx:id="userPurchaseTableColumn" prefWidth="408.0"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8"
+                                     text="пользователь"/>
+                        <TableColumn fx:id="arrangementPurchaseTableColumn" prefWidth="401.99993896484375"
+                                     style="-fx-background-color: #470736; -fx-border-color: #240935; -fx-text-fill: #dcc3e8"
+                                     text="аранжировка"/>
+                    </columns>
+                </TableView>
+            </AnchorPane>
+        </Tab>
+    </TabPane>
+    <Button fx:id="exitButton" layoutX="770.0" layoutY="23.0" mnemonicParsing="false" prefHeight="52.0"
+            prefWidth="184.0" text="Выйти"/>
+</AnchorPane>

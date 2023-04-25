@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
+public class MainController extends Controller implements Initializable {
     private final MainService service = MainService.getInstance();
 
     @FXML
@@ -108,21 +108,18 @@ public class MainController implements Initializable {
                             ar -> ar.getName().equals(selectedArrangementName))
                     .findAny().get();
             if (toggle != null) {
-                if (service.getUser() == null){
+                if (service.getUser() == null) {
                     showCustomErrorAlert("АВТОРИЗУЙСЯ ПАДЛА");
-                }
-                else if (arrangement.getStatus().equals("purchased")){
+                } else if (arrangement.getStatus().equals("purchased")) {
                     showCustomErrorAlert("Эта аранжировка уже куплена");
-                }
-                else if (service.buyArrangement(
+                } else if (service.buyArrangement(
                         arrangement,
                         toggle.toString())) {
                     buyPane.setVisible(false);
                     mediaPlayer.pause();
-                    showCustomAlert("Успешная покупка!\nНе забудьте забрать свои реквизиты");
+                    showCustomAlert("Успешная покупка!\nНе забудьте забрать свою лицензию");
                     arrangements = service.getAllArrangement();
-                }
-                else {
+                } else {
                     showCustomErrorAlert("Ошибка. Не Удалось совершить покупку");
                 }
             }
@@ -154,10 +151,12 @@ public class MainController implements Initializable {
             PasswordField password = new PasswordField();
             password.setPromptText("Введите пароль");
 
+
             grid.add(new Label("Имя:"), 0, 0);
             grid.add(username, 1, 0);
             grid.add(new Label("Пароль:"), 0, 1);
             grid.add(password, 1, 1);
+
 
             dialog.getDialogPane().setContent(grid);
             Platform.runLater(username::requestFocus);
@@ -174,8 +173,11 @@ public class MainController implements Initializable {
 
             if (result.isPresent()) {
                 String response = service.authorization(result.get().getKey(), result.get().getValue());
-                if (response.equals("success")) {
+                if (response.equals("success") || response.equals("admin")) {
                     showCustomAlert("Успешная авторизация");
+                    if (response.equals("admin")) {
+                        openOtherWindow("musicStudioAdmin", buyArrangeButton);
+                    }
                 } else {
                     showCustomErrorAlert(response);
                 }
@@ -209,11 +211,15 @@ public class MainController implements Initializable {
             username.setPromptText("Введите имя");
             PasswordField password = new PasswordField();
             password.setPromptText("Введите пароль");
+            PasswordField passwordConfirmation = new PasswordField();
+            passwordConfirmation.setPromptText("Подтверждение пароля");
 
             grid.add(new Label("Имя:"), 0, 0);
             grid.add(username, 1, 0);
             grid.add(new Label("Пароль:"), 0, 1);
             grid.add(password, 1, 1);
+            grid.add(new Label("Подтверждение пароля:"), 0, 2);
+            grid.add(passwordConfirmation, 1, 2);
 
             dialog.getDialogPane().setContent(grid);
             Platform.runLater(username::requestFocus);
@@ -221,7 +227,11 @@ public class MainController implements Initializable {
             // Возвращение значений
             dialog.setResultConverter(dialogButton -> {
                 if (dialogButton == registerButtonType) {
-                    return new Pair<>(username.getText(), password.getText());
+                    if (password.getText().equals(passwordConfirmation.getText())) {
+                        return new Pair<>(username.getText(), password.getText());
+                    } else {
+                        showCustomErrorAlert("Пароли не совпадают");
+                    }
                 }
                 return null;
             });
@@ -393,6 +403,11 @@ public class MainController implements Initializable {
         alert.showAndWait();
     }
 
-    public void openContacts(){tabPane.getSelectionModel().select(tabPane.getTabs().get(tabPane.getTabs().size() - 1));}
-    public void openRequests(){tabPane.getSelectionModel().select(0);}
+    public void openContacts() {
+        tabPane.getSelectionModel().select(tabPane.getTabs().get(tabPane.getTabs().size() - 1));
+    }
+
+    public void openRequests() {
+        tabPane.getSelectionModel().select(0);
+    }
 }

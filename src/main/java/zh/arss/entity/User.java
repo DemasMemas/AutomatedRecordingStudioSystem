@@ -4,6 +4,7 @@ public class User {
     private long idUser;
     private String login;
     private String password;
+    private boolean isAdministrator;
 
     public long getIdUser() {
         return idUser;
@@ -27,5 +28,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getIsAdministrator() {
+        return isAdministrator;
+    }
+
+    public void setAdministrator(boolean administrator) {
+        isAdministrator = administrator;
     }
 }
