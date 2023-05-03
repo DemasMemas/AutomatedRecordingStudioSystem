@@ -20,7 +20,7 @@
             <Font size="20.0" />
         </font>
     </TextField>
-    <Label alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="33.0" prefWidth="761.0" text="редактирование/создание заявки" textAlignment="CENTER">
+    <Label alignment="CENTER" layoutX="120.0" layoutY="14.0" prefHeight="33.0" prefWidth="761.0" text="редактирование заявки" textAlignment="CENTER">
         <font>
             <Font size="46.0" />
         </font>

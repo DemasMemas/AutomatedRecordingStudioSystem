@@ -138,8 +138,7 @@ public class DatabaseHandler {
             }
 
             return requests;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return requests;
         }
     }
@@ -167,16 +166,33 @@ public class DatabaseHandler {
             }
 
             return arrangements;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return arrangements;
+        }
+    }
+
+    public Arrangement getArrangement(Long idArrangement) {
+        Arrangement arrangement = new Arrangement();
+        try {
+            String request = "select * from arrangement where id_arrangement = ?";
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
+            preparedStatement.setLong(1, idArrangement);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            arrangement.setIdArrangement(idArrangement);
+            arrangement.setName(resultSet.getString("name"));
+            arrangement.setStatus(resultSet.getString("status"));
+            return arrangement;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return arrangement;
         }
     }
 
     public List<User> getAllUser() {
         List<User> users = new ArrayList<>();
         try {
-                String request = "select * from arss_user";
+            String request = "select * from arss_user";
             PreparedStatement preparedStatement = CONNECTION.prepareStatement(request);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -190,8 +206,7 @@ public class DatabaseHandler {
             }
 
             return users;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return users;
         }
     }
@@ -212,8 +227,7 @@ public class DatabaseHandler {
             }
 
             return purchases;
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             return purchases;
         }
     }
@@ -272,7 +286,8 @@ public class DatabaseHandler {
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, status);
             preparedStatement.executeUpdate();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     public void updateArrangement(long id, String name, String status) {

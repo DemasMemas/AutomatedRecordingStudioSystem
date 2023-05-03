@@ -13,4 +13,6 @@ module zh.arss.automatedrecordingstudiosystem {
     exports zh.arss.controller;
     opens zh.arss.entity to javafx.fxml;
     exports zh.arss.entity;
+    opens zh.arss.dto to javafx.fxml;
+    exports zh.arss.dto;
 }

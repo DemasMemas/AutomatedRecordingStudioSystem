@@ -5,15 +5,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import zh.arss.dto.PurchaseForTable;
 import zh.arss.entity.Arrangement;
-import zh.arss.entity.Purchase;
 import zh.arss.entity.Request;
 import zh.arss.entity.User;
 import zh.arss.service.AdminService;
 
 public class AdminController extends Controller {
     @FXML
-    private TableColumn<Purchase, String> arrangementPurchaseTableColumn;
+    private TableColumn<PurchaseForTable, String> arrangementPurchaseTableColumn;
 
     @FXML
     private TableColumn<Request, String> codeRequestTableColumn;
@@ -34,7 +34,7 @@ public class AdminController extends Controller {
     private TableColumn<Arrangement, String> idArrangementTableColumn;
 
     @FXML
-    private TableColumn<Purchase, String> idPurchaseTableColumn;
+    private TableColumn<PurchaseForTable, String> idPurchaseTableColumn;
 
     @FXML
     private TableColumn<Request, String> idRequestTableColumn;
@@ -67,7 +67,7 @@ public class AdminController extends Controller {
     private TableView<Arrangement> arrangementTableView;
 
     @FXML
-    private TableView<Purchase> purchaseTableView;
+    private TableView<PurchaseForTable> purchaseTableView;
 
     @FXML
     private TableView<User> userTableView;
@@ -76,7 +76,7 @@ public class AdminController extends Controller {
     private TableColumn<Arrangement, String> statusArrangementTableColumn;
 
     @FXML
-    private TableColumn<Purchase, String> userPurchaseTableColumn;
+    private TableColumn<PurchaseForTable, String> userPurchaseTableColumn;
 
     @FXML
     private TableColumn<Request, String> userRequestTableColumn;
@@ -90,8 +90,8 @@ public class AdminController extends Controller {
         statusArrangementTableColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         idPurchaseTableColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-        userPurchaseTableColumn.setCellValueFactory(new PropertyValueFactory<>("idUser"));
-        arrangementPurchaseTableColumn.setCellValueFactory(new PropertyValueFactory<>("idArrangement"));
+        userPurchaseTableColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+        arrangementPurchaseTableColumn.setCellValueFactory(new PropertyValueFactory<>("arrangement"));
 
         idUserTableColumn.setCellValueFactory(new PropertyValueFactory<>("idUser"));
         loginUserTableColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
@@ -134,7 +134,7 @@ public class AdminController extends Controller {
             }
         });
         purchaseTableView.setOnMouseClicked(mouseEvent -> {
-            Purchase purchase = purchaseTableView.getSelectionModel().getSelectedItem();
+            PurchaseForTable purchase = purchaseTableView.getSelectionModel().getSelectedItem();
             if(purchase != null){
                 service.injectPurchase(purchase);
                 openNewWindow("editPurchase");
