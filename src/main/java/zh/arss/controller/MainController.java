@@ -109,7 +109,7 @@ public class MainController extends Controller implements Initializable {
                     .findAny().get();
             if (toggle != null) {
                 if (service.getUser() == null) {
-                    showCustomErrorAlert("АВТОРИЗУЙСЯ ПАДЛА");
+                    showCustomErrorAlert("Авторизуйтесь, пожалуйста");
                 } else if (arrangement.getStatus().equals("purchased")) {
                     showCustomErrorAlert("Эта аранжировка уже куплена");
                 } else if (service.buyArrangement(
@@ -326,7 +326,7 @@ public class MainController extends Controller implements Initializable {
                 int finalJ = j;
                 tempLabel.setOnMouseClicked(mouseEvent -> {
                     if (service.getUser() == null) {
-                        showCustomAlert("АВТОРИЗУЙСЯ ПАДЛА");
+                        showCustomAlert("Авторизуйтесь, пожалуйста");
                         return;
                     }
                     if (tempLabel.getText().equals("СВОБОДНО")) {
