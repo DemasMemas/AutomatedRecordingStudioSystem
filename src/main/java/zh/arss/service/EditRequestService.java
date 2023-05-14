@@ -25,8 +25,8 @@ public class EditRequestService {
         this.request = request;
     }
 
-    public void stickRequestInYouAss(String id, String userId, String phone, String email,
-                                     String code, String date, String serviceRequest, String description) {
+    public void handleRequest(String id, String userId, String phone, String email,
+                              String code, String date, String serviceRequest, String description) {
         if (Long.parseLong(id) == request.getIdRequest()) {
             databaseHandler.updateRequest(Long.parseLong(id), Long.parseLong(userId), date, serviceRequest, code, email, phone, description);
         } else {

@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import zh.arss.service.EditRequestService;
 
-public class EditRequestController extends Controller {
+public class    EditRequestController extends Controller {
 
     @FXML
     private Button acceptButton;
@@ -55,7 +55,7 @@ public class EditRequestController extends Controller {
         serviceTextField.setText(service.getRequest().getService());
 
         acceptButton.setOnMouseClicked(mouseEvent -> {
-                    service.stickRequestInYouAss(
+                    service.handleRequest(
                             idTextField.getText(), userIdTextField.getText(), phoneTextField.getText(),
                             emailTextField.getText(), codeTextField.getText(), dateTextField.getText(),
                             serviceTextField.getText(), descriptionTextField.getText());
